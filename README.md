@@ -1,7 +1,7 @@
 # node-ddns 
 
 ![NPM version](https://img.shields.io/npm/v/node-ddns.svg?style=flat)
-![stability-stable](https://img.shields.io/badge/stability-development-red.svg)
+![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)
 ![version](https://img.shields.io/badge/version-1.0.1-red.svg)
 ![maintained](https://img.shields.io/maintenance/yes/2021.svg)
 [![maintainer](https://img.shields.io/badge/maintainer-daniel%20sörlöv-blue.svg)](https://github.com/DSorlov)
