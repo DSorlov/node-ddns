@@ -1,6 +1,6 @@
 {
   "name": "node-ddns",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple ddns library for NodeJS",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,8 @@
     "example-server-tcp": "node examples/server/tcp.js",
     "example-server-tls": "node examples/server/tls.js",
     "example-server-doh": "node examples/server/doh.js",
-    "example-server-ddns": "node examples/server/ddns.js"
+    "example-server-ddns": "node examples/server/ddns.js",
+    "example-server-recursive": "node examples/server/ddns.js"
   },
   "keywords": [
     "dns"
