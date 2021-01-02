@@ -1,0 +1,41 @@
+{
+  "test.com": [
+    {
+      "name": "@",
+      "type": "SOA",
+      "ttl": 300,
+      "data": {
+        "mname": "ns1.test.com",
+        "rname": "admin.test.com",
+        "refresh": 7200,
+        "retry": 3600,
+        "expire": 1209600,
+        "minimum": 300,
+        "serial": 12334
+      }
+    },
+    {
+      "name": "@",
+      "type": "A",
+      "ttl": 300,
+      "data": "192.168.1.1",
+      "username": "testing",
+      "password": "testing"
+    },
+    {
+      "name": "www",
+      "type": "CNAME",
+      "ttl": 300,
+      "data": "testing.com"
+    },
+    {
+      "name": "@",
+      "type": "MX",
+      "ttl": 300,
+      "data": {
+        "preference": 0,
+        "exchange": "testing.com"
+      }
+    }
+  ]
+}

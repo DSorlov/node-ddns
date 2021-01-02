@@ -1,0 +1,34 @@
+{
+  "name": "node-ddns",
+  "version": "1.0.0",
+  "description": "A simple ddns library for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "example-client-udp": "node examples/client/udp.js",
+    "example-client-tcp": "node examples/client/tcp.js",
+    "example-client-tls": "node examples/client/tls.js",
+    "example-client-doh": "node examples/client/doh.js",
+    "example-server-udp": "node examples/server/udp.js",
+    "example-server-tcp": "node examples/server/tcp.js",
+    "example-server-tls": "node examples/server/tls.js",
+    "example-server-doh": "node examples/server/doh.js",
+    "example-server-ddns": "node examples/server/ddns.js"
+  },
+  "keywords": [
+    "dns"
+  ],
+  "author": "Daniel Sörlöv <daniel@sorlov.com>",
+  "contributors": [],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsorlov/node-ddns.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dsorlov/node-ddns/issues"
+  },
+  "homepage": "https://github.com/sorlov/node-ddns#readme",
+  "dependencies": {
+    "dns-packet": "^5.2.1"
+  }
+}
