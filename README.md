@@ -2,7 +2,7 @@
 
 ![NPM version](https://img.shields.io/npm/v/node-ddns.svg?style=flat)
 ![stability-stable](https://img.shields.io/badge/stability-development-red.svg)
-![version](https://img.shields.io/badge/version-1.0.0-red.svg)
+![version](https://img.shields.io/badge/version-1.0.1-red.svg)
 ![maintained](https://img.shields.io/maintenance/yes/2021.svg)
 [![maintainer](https://img.shields.io/badge/maintainer-daniel%20sörlöv-blue.svg)](https://github.com/DSorlov)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://img.shields.io/github/license/DSorlov/node-ddns)
