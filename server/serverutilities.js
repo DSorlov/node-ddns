@@ -4,17 +4,17 @@ class ServerUtilities {
     constructor() {
     };
 
-    static createSuccessResponseFromRequest(request,answers) {
-      var response = {};
+    static createSuccessResponseFromRequest(request,answers,flags=dnsPacket.AUTHORITATIVE_ANSWER) {
+      const response = {};
       response.id = request.id;
       response.type = 'response';
-      response.flags = (response.flags || 0) | dnsPacket.AUTHORITATIVE_ANSWER;
+      response.flags = (response.flags || 0) | flags;
       response.answers =  answers;
       return response;
     };
       
-    static createNXDomainResponseFromRequest(request) {
-      var response = {};
+    static createNotFoundResponseFromRequest(request) {
+      const response = {};
       response.id = request.id;
       response.type = 'response';
       response.flags = 387;
@@ -65,21 +65,11 @@ class ServerUtilities {
                     if (query.type=="ANY"||query.type==searchResult.type)
                     {
                       var result = Object.assign({},searchResult, {zone: zoneLookup.zone});
-
                       if (redact) {
                         result.name = query.name;
-                        try {
-                          delete result.username;
-                        } catch (e)
-                        {}
-                        try {
-                          delete result.password;
-                        } catch (e)
-                        {}
-                        try {
-                          delete result.zone;
-                        } catch (e)
-                        {}
+                        if (result.username) delete result.username;
+                        if (result.password) delete result.password;
+                        if (result.zone) delete result.zone;
                       }
                       results.push(result);
                     }

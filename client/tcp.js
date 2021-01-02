@@ -5,8 +5,10 @@ function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-async function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53) {
+async function Query(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53,timeout=2) {
   return new Promise((resolve, reject) => {
+    var timer=setTimeout(()=>{clearTimeout(timer);reject('timeout');}, (timeout*1000));
+
     const buf = dnsPacket.streamEncode({
         type: 'query',
         id: getRandomInt(1, 65534),
@@ -36,17 +38,20 @@ async function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53
         }
       
         if (response.byteLength >= expectedLength) {
+          clearTimeout(timer);
           resolve(dnsPacket.streamDecode(response));
           client.destroy()
         }
       })
       
       client.on('close', function () {
+        clearTimeout(timer);
         reject('Remote server closed socket');
+        client.destroy()
       })    
     });
 }
 
 module.exports = {
-    rawQuery: rawQuery
+    Query
 }
