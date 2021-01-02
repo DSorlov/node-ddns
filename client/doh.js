@@ -1,4 +1,7 @@
 const https = require('https')
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const dnsPacket = require('dns-packet')
 
 function getRandomInt (min, max) {
@@ -45,7 +48,79 @@ function Query(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=443,timeout
     });
 }
 
+function getExternalIP(ipv) {
+    const version = process.env.npm_package_version ? process.env.npm_package_version : JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version;
+    return new Promise((resolve, reject) => {
+        const req = https.request({
+            hostname: `ipv${ipv}.ipadress.se`,
+            port: 443,
+            path: "/",
+            method: 'GET',
+            headers: {
+                'User-Agent': `node-ddns/${version}`  
+              }
+        }, (res)=>{
+            if (res.statusCode!==200)
+                reject(new Error("HTTP response code " + res.statusCode + " while determining real ip."));
+
+            res.on('data', data => {
+                try {
+                    resolve(JSON.parse(data));
+                } catch (error) {
+                    reject(new Error("Parser error '" + error + "' while determining real ip."));
+                }
+            })        
+        });
+        req.on('error', error => {
+                reject(error);
+        })
+        req.end()
+    });    
+};
+
+function internalUpdateDyndns2(server,username,password,hostname,ip,port,protocol,uri) {
+    const version = process.env.npm_package_version ? process.env.npm_package_version : JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version;
+    const authData = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
+    const options = {
+        hostname: server,
+        port: port,
+        path: uri + `?hostname=${hostname}&myip=${ip}`,
+        method: 'GET',
+        headers: {
+            'Authorization': authData,
+            'User-Agent': `node-ddns/${version}`  
+          }
+    }
+
+    return new Promise((resolve, reject) => {
+        const req = (protocol == 'https' ? https : http).request(options, (res)=>{
+            if (res.statusCode===200)
+                resolve();
+            else
+                reject(new Error("HTTP response code " + res.statusCode + " when updating."));    
+        });
+        req.on('error', error => {
+            reject(error);
+        })
+        req.end();
+    });
+}
+
+function UpdateDyndns2(server,username,password,hostname,ip="",ipv=4,port=443,protocol="https",uri="/nic/update") {
+    return new Promise((resolve, reject) => {
+        if (ip=="") {
+            getExternalIP(ipv).then((lookup)=>{
+                internalUpdateDyndns2(server,username,password,hostname,lookup.query,port,protocol,uri).then(resolve,reject);
+            }).catch((error)=> {
+                reject(error);
+            });
+        } else {
+            internalUpdateDyndns2(server,username,password,hostname,ip,port,protocol,uri).then(resolve,reject);
+        }
+    });
+}
 
 module.exports = {
-    Query
+    Query,
+    UpdateDyndns2
 }
