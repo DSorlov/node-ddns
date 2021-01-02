@@ -77,6 +77,7 @@ will be found in `request.questions[0].name`.
 
 ### Examples
 ```
+npm run example-client-simple
 npm run example-client-udp
 npm run example-client-tcp
 npm run example-client-tls
@@ -86,4 +87,5 @@ npm run example-server-tcp
 npm run example-server-tls
 npm run example-server-doh
 npm run example-server-ddns
+npm run example-server-recursive
 ```
