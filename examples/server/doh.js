@@ -24,7 +24,7 @@ server.on('request', (request, response, rinfo) => {
         var answers = ddns.ServerUtilities.objectZoneLookup(zoneData,question);
         if (answers.length==0) {
             console.log(`Query for ${question.type} records of '${question.name}': responded NXDOMAIN` )
-            response(ddns.ServerUtilities.createNXDomainResponseFromRequest(request));
+            response(ddns.ServerUtilities.createNotFoundResponseFromRequest(request));
         } else {
             console.log(`Query for ${question.type} records of '${question.name}': responded '${JSON.stringify(answers[0].data)}'` )
             response(ddns.ServerUtilities.createSuccessResponseFromRequest(request,answers));

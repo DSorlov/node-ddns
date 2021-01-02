@@ -5,8 +5,9 @@ function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-async function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53,ipv=4) {
+async function Query(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53,ipv=4,timeout=2) {
     return new Promise((resolve, reject) => {
+        var timer=setTimeout(()=>{socket.close();clearTimeout(timer);reject('timeout');}, (timeout*1000));
         const socket = dgram.createSocket('udp'+ipv)
         const buf = dnsPacket.encode({
             type: 'query',
@@ -17,10 +18,12 @@ async function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53
 
         socket.on('message', message => {
             socket.close();
+            clearTimeout(timer);
             resolve(dnsPacket.decode(message));
         });
         
         socket.on('error', e => {
+            clearTimeout(timer);
             reject(e);
         });
         
@@ -29,5 +32,5 @@ async function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=53
 }
 
 module.exports = {
-    rawQuery: rawQuery
+    Query: Query
 }

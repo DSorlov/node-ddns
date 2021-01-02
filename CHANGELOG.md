@@ -4,7 +4,19 @@ The format is based on [Keep a Changelog][keep-a-changelog]
 <!-- and this project adheres to [Semantic Versioning][semantic-versioning]. -->
 
 ## [Unreleased]
-- Nothing right now
+### New
+- Implemented query timeout in all clients
+- Implemented a short-quick-type quiers directly in ddns class
+- Added simple recursive server example
+
+### Changes
+- Changed internal naming of createNXDomainResponseFromRequest to createNotFoundResponseFromRequest in serverutils
+- Changed internal naming of rawQuery to Query in all clients
+- Updated examples and readme to support new short-quick-type queries
+
+### Fixes
+- Cleanup of lingering objects on errors or rejects in all clients
+
 
 ## [1.0.0] (2021-01-??)
 - Initial release

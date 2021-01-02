@@ -3,10 +3,9 @@ const path = require('path');
 const fs = require('fs');
 
 
-console.log('*** NODE-DDNS Example - TLS Server ***');
-const cert = fs.readFileSync(path.join(__dirname,"server.crt"));
-const key = fs.readFileSync(path.join(__dirname,"secret.key"));
-const server = new ddns.TLSServer({port:853,cert:cert,key:key});
+console.log('*** NODE-DDNS Example - Recursive UDP Server ***');
+const server = new ddns.UDPServer({port:53});
+const dns = new ddns();
 const zoneData = JSON.parse(fs.readFileSync(path.join(__dirname,'./zones.json')));
 
 console.log(`Loaded ${Object.keys(zoneData).length} zones from zones.json`)
@@ -22,8 +21,15 @@ server.on('request', (request, response, rinfo) => {
 
         var answers = ddns.ServerUtilities.objectZoneLookup(zoneData,question);
         if (answers.length==0) {
-            console.log(`Query for ${question.type} records of '${question.name}': responded NXDOMAIN` )
-            response(ddns.ServerUtilities.createNotFoundResponseFromRequest(request));
+
+            dns.ResolveA(question.name).then((result)=>{
+                console.log(`Query for ${question.type} records of '${question.name}' recursive answer: '${JSON.stringify(result.answers)}'` )
+                response(ddns.ServerUtilities.createSuccessResponseFromRequest(request,result.answers,0));
+            }).catch((error)=>{
+                console.log(`Query for ${question.type} records of '${question.name}': responded NXDOMAIN` )
+                response(ddns.ServerUtilities.createNotFoundResponseFromRequest(request));
+            });
+
         } else {
             console.log(`Query for ${question.type} records of '${question.name}': responded '${JSON.stringify(answers[0].data)}'` )
             response(ddns.ServerUtilities.createSuccessResponseFromRequest(request,answers));

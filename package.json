@@ -8,6 +8,7 @@
     "example-client-tcp": "node examples/client/tcp.js",
     "example-client-tls": "node examples/client/tls.js",
     "example-client-doh": "node examples/client/doh.js",
+    "example-client-simple": "node examples/client/simple.js",
     "example-server-udp": "node examples/server/udp.js",
     "example-server-tcp": "node examples/server/tcp.js",
     "example-server-tls": "node examples/server/tls.js",

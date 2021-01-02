@@ -7,7 +7,7 @@
 [![maintainer](https://img.shields.io/badge/maintainer-daniel%20sörlöv-blue.svg)](https://github.com/DSorlov)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://img.shields.io/github/license/DSorlov/node-ddns)
 
-> A DNS Client, Server and DDNS Implementation in Pure JavaScript, only dependant on [dns-packet](https://github.com/mafintosh/dns-packet) and [node-ip](https://github.com/indutny/node-ip).
+> A DNS Client, Server and DDNS Implementation in Pure JavaScript, only dependant on [dns-packet](https://github.com/mafintosh/dns-packet) and [node-ip](https://github.com/indutny/node-ip). Huge thanks to [dns2](https://github.com/song940/node-dns) for inspiration and lots of smart code.
 
 ### Features
 
@@ -28,23 +28,23 @@ npm install node-ddns
 
 ### Example Client
 
-Lookup the A-record for the domain `google.com`.
+Most simple lookup the A-record for the domain `google.com`.
 
 ```js
 const ddns = require('node-ddns');
-const server = "1.1.1.1";
+const dns = new ddns();
 
-ddns.UDPClient.rawQuery(server,[{type: 'A', name: 'google.com'}]).then((result)=>{
-    console.log(result);
-})
+dns.ResolveA('www.google.com').then((result)=>{
+    console.log(result.answers);
+}).catch((error)=>{
+    console.log(error);
+});
 ```
 
 ### Example Server
 
 ```js
-
 const ddns = require('../..');
-
 const server = new ddns.UDPServer({port:53});
 
 server.listen().then(()=>{

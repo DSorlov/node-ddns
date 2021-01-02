@@ -5,8 +5,9 @@ function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=443) {
+function Query(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=443,timeout=2) {
     return new Promise((resolve, reject) => {
+        var timer=setTimeout(()=>{clearTimeout(timer);reject('timeout');}, (timeout*1000));
 
         var packet = {
             type: 'query',
@@ -29,11 +30,13 @@ function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=443) {
 
         const request = https.request(options, (response) => {
             response.on('data', (d) => {
+                clearTimeout(timer);
                 resolve(dnsPacket.decode(d));
             })
         })
 
         request.on('error', (e) => {
+            clearTimeout(timer);
             reject(Error(e));
         })
 
@@ -44,5 +47,5 @@ function rawQuery(server,queries,flags=dnsPacket.RECURSION_DESIRED,port=443) {
 
 
 module.exports = {
-    rawQuery: rawQuery
+    Query
 }
