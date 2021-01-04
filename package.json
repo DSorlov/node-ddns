@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/dsorlov/node-ddns/issues"
   },
-  "homepage": "https://github.com/sorlov/node-ddns#readme",
+  "homepage": "https://github.com/dsorlov/node-ddns#readme",
   "dependencies": {
     "dns-packet": "^5.2.1"
   }
