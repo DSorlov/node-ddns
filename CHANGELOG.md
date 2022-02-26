@@ -4,7 +4,8 @@ The format is based on [Keep a Changelog][keep-a-changelog]
 <!-- and this project adheres to [Semantic Versioning][semantic-versioning]. -->
 
 ## [Unreleased]
-- Nothing
+- Dyndns2 client included in DOHClient
+- Changed test.com to testing.com
 
 ## [1.0.1] (2021-01-02)
 ### New

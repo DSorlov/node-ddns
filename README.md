@@ -13,12 +13,11 @@
 
 + UDPClient, TCPClient, TLSClient, DOHClient
 + UDPServer, TCPServer, TLSServer, DOHServer
-+ Support a massive amount of record types
-+ Supports DNSSEC
-+ Extremely lightweight and simple to use
-+ Many detailed samples to get you started
-+ Supports Dyndns2 update via http if running DOHServer!
-+ Basic json-zone-file handing built in
++ Support a massive amount of record types and DNSSEC
++ Extremely lightweight and simple to use using uncomplicated structure
++ Many detailed samples to get you started with almost any usecase
++ Supports Dyndns2 updating using DOHClient or DOHServer
++ Basic json-zone-file handing built in (it's beyond limited but it atleast exists)
 
 ### Installation
 
@@ -82,6 +81,7 @@ npm run example-client-udp
 npm run example-client-tcp
 npm run example-client-tls
 npm run example-client-doh
+npm run example-client-dyndns2
 npm run example-server-udp
 npm run example-server-tcp
 npm run example-server-tls

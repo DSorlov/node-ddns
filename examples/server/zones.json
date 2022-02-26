@@ -1,12 +1,12 @@
 {
-  "test.com": [
+  "testing.com": [
     {
       "name": "@",
       "type": "SOA",
       "ttl": 300,
       "data": {
-        "mname": "ns1.test.com",
-        "rname": "admin.test.com",
+        "mname": "ns1.testing.com",
+        "rname": "admin.testing.com",
         "refresh": 7200,
         "retry": 3600,
         "expire": 1209600,
